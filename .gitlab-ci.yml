@@ -1,0 +1,27 @@
+image: node:16.5.0
+variables:
+  BuildFolder: "build"
+build site:
+  stage: build
+  cache:
+    key:
+      files:
+        - package-lock.json
+      prefix: npm
+    paths:
+      - node_modules/
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - $BuildFolder
+  only:
+    - main
+deploy:
+  script:
+    - apt-get update -qq && apt-get install -y -qq lftp
+    - lftp -c "set ftp:ssl-allow no; open -u $USERNAME,$PASSWORD $HOST; mirror -Rnev ./$BuildFolder . --ignore-time --parallel=10 --exclude-glob . git* --exclude .git/"
+  only:
+    - main

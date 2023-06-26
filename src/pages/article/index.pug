@@ -1,0 +1,13 @@
+extends @pug/base
+
+append globals
+	- pageName = 'article'
+
+append vars
+
+block content
+	+router(pageName)
+		include @components/header/header
+		h1 Article.html
+		a(href="./") home page
+		include @components/footer/footer

@@ -1,0 +1,10 @@
+extends @pug/base
+
+append globals
+	- pageName = '404'
+
+append vars
+
+block content
+	+router(pageName)
+		h1 404

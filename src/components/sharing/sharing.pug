@@ -1,0 +1,4 @@
+mixin sharing(name)
+	button.sharing(type="button" data-social=name)&attributes(attributes)
+		span!= name
+		+svg(name)
